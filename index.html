@@ -4,13 +4,57 @@
         <meta charset="UTF-8">
         <title>Calculator</title>
         <link rel="stylesheet" href="styles/style.css">
-        <script src="scripts/script.js"></script>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+        <script src="scripts/script.js" defer></script>
     </head>
+
     <body>
         <section id="calculator-container">
             <h1>JS Calculator</h1>
-            <div id="calculator-body"></div>
+
+            <div id="calculator-body">
+                <div id="screen-frame">
+                    <div id="screen">
+                        1.2345678
+                    </div>
+                </div>
+
+                <div id="top-buttons">
+                    <div id="btn-on" class="btn btn-orange">On</div>
+                    <div id="btn-off" class="btn btn-gray">Off</div>
+                    <div id="btn-sound" class="btn btn-gray">volume_off</div>
+                    <div>
+                        <div id="sound-led"></div>
+                        <span>Sound</span>
+                    </div>                                        
+                </div>
+
+                <div id="number-buttons">
+                    <div id="btn-9" class="btn btn-black">9</div>
+                    <div id="btn-8" class="btn btn-black">8</div>
+                    <div id="btn-7" class="btn btn-black">7</div>
+                    <div id="btn-6" class="btn btn-black">6</div>
+                    <div id="btn-5" class="btn btn-black">5</div>
+                    <div id="btn-4" class="btn btn-black">4</div>
+                    <div id="btn-3" class="btn btn-black">3</div>
+                    <div id="btn-2" class="btn btn-black">2</div>
+                    <div id="btn-1" class="btn btn-black">1</div>
+                    <div id="btn-0" class="btn btn-black">0</div>
+                    <div id="btn-dot" class="btn btn-black">.</div>
+                </div>
+
+                <div id="operation-buttons">
+                    <div id="btn-clear" class="btn btn-orange">backspace</div>
+                    <div id="btn-clear-all" class="btn btn-orange">Clear all</div>
+                    <div id="btn-substract" class="btn btn-gray">-</div>
+                    <div id="btn-divide" class="btn btn-gray">÷</div>
+                    <div id="btn-add" class="btn btn-gray">+</div>
+                    <div id="btn-multiply" class="btn btn-gray">x</div>
+                    <div id="btn-equals" class="btn btn-gray">=</div>
+                </div>                
+            </div>
         </section>
+        
         <footer>
             <span class="developed">Developed by thericardoac</span>
             <span class="credits">Background image by freepik</span>
