@@ -1,0 +1,12 @@
+/* ****************** GENERAL STYLES ******************* */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;    
+}
+
+/* ******************** FONT IMPORT ******************** */
+@font-face {
+    font-family: "Digital";
+    src: url("../fonts/digital-7.ttf");
+}
