@@ -5,8 +5,75 @@
     box-sizing: border-box;    
 }
 
+
 /* ******************** FONT IMPORT ******************** */
 @font-face {
     font-family: "Digital";
     src: url("../fonts/digital-7.ttf");
+}
+
+
+/* *********************** BODY ************************ */
+body {
+    height: 100vh;
+    display: flex;    
+    flex-direction: column;
+}
+
+
+/* ******************** CALCULATOR ********************* */
+#calculator-container {
+    background: url("../images/calculator-bg.jpg");
+    background-size: cover;
+    background-position: center;
+    display: flex;    
+    flex: 1;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#calculator-container h1 {
+    font-family: "Digital";
+    font-weight: 500;
+    font-size: 100px;    
+    color: #f37c20;  
+    margin-bottom: 50px;
+    text-shadow: 0 0 15px black;  
+}
+
+#calculator-body {
+    width: 500px;
+    border-radius: 15px;
+    display: grid;
+    background-color: #d7d7d7;
+    padding: 10px;
+    box-shadow: 0 0 20px black; 
+}
+
+#screen-frame {
+    background-color: black;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+#screen {
+    background-color: #abc4a7;
+    font-family: "Digital";
+    font-size: 80px;
+    text-align: right;
+    border: 2px solid #b0b2b1;
+    padding: 10px;
+    height: 87px; 
+    box-shadow: inset 0 0 12px black;   
+}
+
+
+/* ********************* FOOTER ************************ */
+footer {
+    background-color: #f37c20;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
