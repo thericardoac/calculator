@@ -33,7 +33,7 @@ body {
 
 
 /* ******************** CALCULATOR ********************* */
-#calculator-container {
+.container {
     background: url("../images/calculator-bg.jpg");
     background-size: cover;
     background-position: center;
@@ -44,15 +44,24 @@ body {
     justify-content: space-evenly;
 }
 
-#calculator-container h1 {
-    font-family: "Digital";
-    font-weight: 500;
-    font-size: 90px;    
-    color: #f37c20;    
-    text-shadow: 0 0 15px black;  
+#calculator { 
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    gap: 30px;
 }
 
-#calculator-body {
+#calculator h1 {
+    font-family: "Digital";
+    font-weight: 500;
+    font-size: 90px;
+    height: 70px;    
+    color: #f37c20;    
+    text-shadow: 0 0 15px black;    
+}
+
+#calculator-body {    
     width: 500px;
     border-radius: 15px;
     display: grid;
