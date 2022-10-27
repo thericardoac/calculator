@@ -2,7 +2,8 @@
 * {
     margin: 0;
     padding: 0;
-    box-sizing: border-box;    
+    box-sizing: border-box;
+    font-family: sans-serif;   
 }
 
 
@@ -14,12 +15,12 @@
 
 
 /* **************** FONT USED AS ICONS ***************** */
-.material-symbols-outlined {    
-  font-variation-settings:
-  'FILL' 1,
-  'wght' 700,
-  'GRAD' 0,
-  'opsz' 48
+.material-symbols-outlined {        
+    font-variation-settings:
+    'FILL' 1,
+    'wght' 700,
+    'GRAD' 0,
+    'opsz' 48
 }
 
 
@@ -40,15 +41,14 @@ body {
     flex: 1;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: space-evenly;
 }
 
 #calculator-container h1 {
     font-family: "Digital";
     font-weight: 500;
-    font-size: 100px;    
-    color: #f37c20;  
-    margin-bottom: 50px;
+    font-size: 90px;    
+    color: #f37c20;    
     text-shadow: 0 0 15px black;  
 }
 
@@ -57,14 +57,17 @@ body {
     border-radius: 15px;
     display: grid;
     background-color: #d7d7d7;
-    padding: 10px;
-    box-shadow: 0 0 20px black; 
+    padding: 20px;
+    box-shadow: 0 0 20px black;
+    grid-template-columns: repeat(5, 1fr);   
+    gap: 20px;
 }
 
 #screen-frame {
     background-color: black;
     padding: 10px;
     border-radius: 10px;
+    grid-column: 1/6;    
 }
 
 #screen {
@@ -73,9 +76,102 @@ body {
     font-size: 80px;
     text-align: right;
     border: 2px solid #b0b2b1;
+    border-radius: 10px;
     padding: 10px;
     height: 87px; 
     box-shadow: inset 0 0 12px black;   
+}
+
+.btn {    
+    text-transform: uppercase;
+    color: white;
+    font-size: 30px;       
+    border-radius: 5px;
+    border: none;
+    padding: 15px 0; 
+    box-shadow: 0 0 3px  1px black;
+}
+
+.btn-orange {
+    background-color: #f37c20;    
+}
+
+.btn-gray {
+    background-color: #9a9a9a;    
+}
+
+.btn-black {
+    background-color: black;
+}
+
+.led-status {        
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    gap: 7px;
+}
+
+.led {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;    
+    margin: 0 auto;
+    box-shadow: 0 0 3px  1px black;  
+}
+
+.power-led {
+    background-color: #73a001;    
+}
+
+.sound-led {
+    background-color: rgb(165, 0, 0);    
+}
+
+.power-on {
+    background-color: #b6ff00;
+    box-shadow: 0 0 8px 5px #b6ff00;
+}
+
+.sound-on {
+    background-color: red;
+    box-shadow: 0 0 8px 5px red;
+}
+
+#btn-4 {
+    grid-area: 4/1/5/2;
+}
+
+#btn-5 {
+    grid-area: 4/2/5/3;
+}
+
+#btn-6 {
+    grid-area: 4/3/5/4;
+}
+
+#btn-1 {
+    grid-area: 5/1/6/2;
+}
+
+#btn-2 {
+    grid-area: 5/2/6/3;
+}
+
+#btn-3 {
+    grid-area: 5/3/6/4;
+}
+
+#btn-0 {
+    grid-area: 6/1/7/3;
+}
+
+#btn-dot {
+    grid-area: 6/3/7/4;
+}
+
+#btn-add {
+    grid-area: 5/4/7/5;
 }
 
 
