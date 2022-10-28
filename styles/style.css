@@ -61,8 +61,7 @@ body {
     text-shadow: 0 0 15px black;    
 }
 
-#calculator-body {    
-    width: 500px;
+#calculator-body {        
     border-radius: 15px;
     display: grid;
     background-color: #d7d7d7;
@@ -97,7 +96,7 @@ body {
     font-size: 30px;       
     border-radius: 5px;
     border: none;
-    padding: 15px 0; 
+    padding: 15px 5px; 
     box-shadow: 0 0 3px  1px black;
 }
 
