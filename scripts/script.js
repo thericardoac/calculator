@@ -43,14 +43,13 @@ function toggleLed(status, led, ledClass) {
 // If the calculator has just turned OFF, turns sound mode OFF (turns sound led OFF and changes icon of sound button).
 function toggleSound() {
     if (calculatorIsOn) {
-        soundIsOn ? soundIsOn = false : soundIsOn = true;
-        soundIsOn ? btnSnd.textContent = "volume_off" : btnSnd.textContent = "volume_up";
+        soundIsOn ? soundIsOn = false : soundIsOn = true;        
+        playBeep();
         toggleLed(soundIsOn, divSndLed, "sound-light");
         console.log("Sound " + soundIsOn);
 
     } else {
-        soundIsOn = false;
-        btnSnd.textContent = "volume_off";
+        soundIsOn = false;        
         toggleLed(soundIsOn, divSndLed, "sound-light");
         console.log("Sound " + soundIsOn);
     } 
