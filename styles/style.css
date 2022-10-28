@@ -130,19 +130,19 @@ body {
 }
 
 .power-led {
-    background-color: #73a001;    
+    background-color: #597c00;    
 }
 
 .sound-led {
-    background-color: rgb(165, 0, 0);    
+    background-color: rgb(128, 0, 0);    
 }
 
-.power-on {
+.power-light {
     background-color: #b6ff00;
     box-shadow: 0 0 8px 5px #b6ff00;
 }
 
-.sound-on {
+.sound-light {
     background-color: red;
     box-shadow: 0 0 8px 5px red;
 }
