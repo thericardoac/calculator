@@ -1,8 +1,12 @@
 "use strict"
 
 // *************************** VARIABLES ******************************
+// CALCULATOR STATUSES
 let calculatorIsOn = false;
 let soundIsOn = false;
+let decimalPointOn = false;
+
+// TOP BUTTONS
 const calculator = document.querySelector("#calculator-body");
 const divScreen = calculator.querySelector("#screen");
 const btnOn = calculator.querySelector("#btn-on");
@@ -12,22 +16,36 @@ const divPwrLed = calculator.querySelector("#power-led");
 const divSndLed = calculator.querySelector("#sound-led");
 const audioBeep = calculator.querySelector("#audio-beep");
 
+// DIGIT BUTTONS
+// Creates an object with the digit buttons. (0-9 and decimal point).
+// Each button writes to calculator screen its value.
+const digitBtns = calculator.querySelectorAll(".btn-digit");
+digitBtns.forEach(digitBtn => {    
+    const keyPressed = digitBtn.textContent
+    digitBtn.addEventListener("click", function() {
+        if (calculatorIsOn) {            
+            writeToScreen(keyPressed);
+        }
+    });
+});
+
 
 // ********************* FUNCTION DECLARATIONS ************************
 function turnOnCalculator() {
-    //Turns calculator ON, turns power led ON,
+    //Turns calculator ON, enables the use of decimal point, turns power led ON,
     //turns screen ON, turns sound mode ON and plays the beep.          
     calculatorIsOn = true;
+    decimalPointOn = true;
     console.log("Calculator " + calculatorIsOn);
     toggleLed(calculatorIsOn, divPwrLed, "power-light");        
     toggleScreen();
     toggleSound();
-    playBeep();                 
+    playBeep();                
 }
 
 // Turns ON the screen (puts initial 0) or turns it OFF.
 function toggleScreen() {
-    calculatorIsOn ? divScreen.textContent = "0." : divScreen.textContent = "";
+    calculatorIsOn ? divScreen.textContent = "0" : divScreen.textContent = "";
 }
 
 // Toggles ON or OFF the desired led.
@@ -63,9 +81,9 @@ function playBeep() {
     }
 }
 
-function turnOffCalculator() {
-    // Turns calculator OFF, turns the power led OFF, turns the screen OFF, 
-    // and turns sound mode OFF.
+// Turns calculator OFF, turns the power led OFF, turns the screen OFF, 
+// and turns sound mode OFF.
+function turnOffCalculator() {    
     calculatorIsOn = false;
     console.log("Calculator " + calculatorIsOn);       
     toggleLed(calculatorIsOn, divPwrLed, "power-light");                  
@@ -73,16 +91,36 @@ function turnOffCalculator() {
     toggleSound();            
 }
 
+// Writes to calculator screen the pressed digit button.
+function writeToScreen(keyPressed) {    
+    if (keyPressed !== ".") {
+        if (divScreen.textContent == "0") {
+            divScreen.textContent = keyPressed;
+        } else {
+            divScreen.textContent += keyPressed;
+        }
+
+    // Once the decimal point is used, it is disabled
+    } else if (keyPressed == "." && decimalPointOn) {
+        divScreen.textContent += keyPressed;
+        decimalPointOn = false;
+    }
+    
+    if (soundIsOn) {
+        playBeep();
+    }
+}
+
 
 // ********************* CALCULATOR UI BUTTONS ************************
-// ON button: Turns on calculator if it is OFF.
+// ON button: Turns ON calculator if it is OFF.
 btnOn.addEventListener("click", function() {
     if (!calculatorIsOn) {
         turnOnCalculator();
     }
 });
 
-// OFF button: Turns off calculator if it is ON
+// OFF button: Turns OFF calculator if it is ON
 btnOff.addEventListener("click", function() {
     if (calculatorIsOn) {
         turnOffCalculator();
