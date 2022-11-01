@@ -1,10 +1,14 @@
 "use strict"
 
-// *************************** VARIABLES ******************************
-// CALCULATOR STATUSES
+// *************************** VARIABLE DECLARATIONS ******************************
+// CALCULATOR STATUSES AND SAVED NUMBER
 let calculatorIsOn = false;
 let soundIsOn = false;
 let decimalPointOn = false;
+let operation = null;
+
+let savedNumber = null;
+let resetScreen= false;
 
 // TOP BUTTONS
 const calculator = document.querySelector("#calculator-body");
@@ -29,18 +33,34 @@ digitBtns.forEach(digitBtn => {
     });
 });
 
+// OPERATION BUTTONS
+const operationBtns = calculator.querySelectorAll(".btn-operation");
+operationBtns.forEach(operationBtn => {    
+    operationBtn.addEventListener("click", function() {
+        if (calculatorIsOn) {
+            saveScreenNumber();
+            operation = operationBtn.textContent;            
+            console.log("Operation " + operation);            
+        }
+    });
+});
+
 
 // ********************* FUNCTION DECLARATIONS ************************
 function turnOnCalculator() {
     //Turns calculator ON, enables the use of decimal point, turns power led ON,
     //turns screen ON, turns sound mode ON and plays the beep.          
     calculatorIsOn = true;
-    decimalPointOn = true;
     console.log("Calculator " + calculatorIsOn);
+    decimalPointOn = true;    
     toggleLed(calculatorIsOn, divPwrLed, "power-light");        
     toggleScreen();
     toggleSound();
-    playBeep();                
+    playBeep();
+    
+    console.log("Reset screen " + resetScreen);
+    console.log("Decimal "+ decimalPointOn);
+    console.log("Operation "+ operation);
 }
 
 // Turns ON the screen (puts initial 0) or turns it OFF.
@@ -93,6 +113,11 @@ function turnOffCalculator() {
 
 // Writes to calculator screen the pressed digit button.
 function writeToScreen(keyPressed) {    
+    // If user selected an operation, the screen will reset.
+    if (resetScreen) {
+        divScreen.textContent = "";
+    }
+    
     if (keyPressed !== ".") {
         if (divScreen.textContent == "0") {
             divScreen.textContent = keyPressed;
@@ -100,15 +125,32 @@ function writeToScreen(keyPressed) {
             divScreen.textContent += keyPressed;
         }
 
-    // Once the decimal point is used, it is disabled
-    } else if (keyPressed == "." && decimalPointOn) {
+    // Once the decimal point is used, it is disabled.
+    } else if (keyPressed == "." && decimalPointOn) {        
+        if (divScreen.textContent == "") {
+            divScreen.textContent = "0";
+        }
         divScreen.textContent += keyPressed;
         decimalPointOn = false;
-    }
+        console.log("Decimal " + false);
+    }    
     
+    resetScreen = false;
+    console.log("Reset screen " + resetScreen);
+
     if (soundIsOn) {
         playBeep();
     }
+}
+
+// Captures the number on the screen when an operation button is pressed.
+function saveScreenNumber() {
+    savedNumber = Number(divScreen.textContent);    
+    decimalPointOn = true;
+    resetScreen = true;
+    console.log("Saved " + savedNumber);    
+    console.log("Decimal " + decimalPointOn);
+    console.log("Reset screen " + resetScreen);
 }
 
 
