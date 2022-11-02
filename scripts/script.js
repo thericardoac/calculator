@@ -1,14 +1,16 @@
 "use strict"
 
 // *************************** VARIABLE DECLARATIONS ******************************
-// CALCULATOR STATUSES AND SAVED NUMBER
+// CALCULATOR STATUSES AND SAVED NUMBERS
 let calculatorIsOn = false;
 let soundIsOn = false;
 let decimalPointOn = false;
 let operation = null;
 
-let savedNumber = null;
-let resetScreen= false;
+let savingFirstNumber = false;
+let firstNumber = null;
+let secondNumber = null;
+let newNumber = false;
 
 // TOP BUTTONS
 const calculator = document.querySelector("#calculator-body");
@@ -34,36 +36,52 @@ digitBtns.forEach(digitBtn => {
 });
 
 // OPERATION BUTTONS
+// Creates an object with the operation buttons.
 const operationBtns = calculator.querySelectorAll(".btn-operation");
 operationBtns.forEach(operationBtn => {    
     operationBtn.addEventListener("click", function() {
         if (calculatorIsOn) {
-            saveScreenNumber();
-            operation = operationBtn.textContent;            
-            console.log("Operation " + operation);            
+            setOperation(operationBtn.textContent);                       
         }
     });
 });
 
+// EQUALS BUTTON
+// If the user starts typing an operation instead of a digit, saves a 0 as the first number.
+// Gets the result of the numbers operation.
+const equalsBtn = calculator.querySelector("#btn-equals");
+equalsBtn.addEventListener("click", function() {
+    if (calculatorIsOn) {        
+        saveNumber();
+        getResult();
+    }
+});
+
 
 // ********************* FUNCTION DECLARATIONS ************************
-function turnOnCalculator() {
-    //Turns calculator ON, enables the use of decimal point, turns power led ON,
-    //turns screen ON, turns sound mode ON and plays the beep.          
+// Turns calculator ON
+function turnOnCalculator() {              
     calculatorIsOn = true;
-    console.log("Calculator " + calculatorIsOn);
-    decimalPointOn = true;    
+    decimalPointOn = true;
+    savingFirstNumber = true;
+    firstNumber = null;
+    secondNumber = null;
+    newNumber = true;
+    operation = null    
     toggleLed(calculatorIsOn, divPwrLed, "power-light");        
     toggleScreen();
     toggleSound();
     playBeep();
     
-    console.log("Reset screen " + resetScreen);
-    console.log("Decimal "+ decimalPointOn);
-    console.log("Operation "+ operation);
+    // console.log("Calculator: " + calculatorIsOn);
+    // console.log("Entering new: " + newNumber);
+    // console.log("Decimal: " + decimalPointOn);
+    // console.log("Operation: " + operation);
+    // console.log("1st number: " + firstNumber);
+    // console.log("2nd number: " + secondNumber);
 }
 
-// Turns ON the screen (puts initial 0) or turns it OFF.
+// Turns the screen ON (puts initial 0) or turns it OFF.
 function toggleScreen() {
     calculatorIsOn ? divScreen.textContent = "0" : divScreen.textContent = "";
 }
@@ -77,23 +95,22 @@ function toggleLed(status, led, ledClass) {
     }
 }
 
-// If the calculator is ON, toggles sound mode (toggles sound led and changes icon of sound button).
-// If the calculator has just turned OFF, turns sound mode OFF (turns sound led OFF and changes icon of sound button).
+// Toggles sound mode and its led indicator
 function toggleSound() {
     if (calculatorIsOn) {
-        soundIsOn ? soundIsOn = false : soundIsOn = true;        
-        playBeep();
+        soundIsOn ? soundIsOn = false : soundIsOn = true;
         toggleLed(soundIsOn, divSndLed, "sound-light");
-        console.log("Sound " + soundIsOn);
+        playBeep();
+        //console.log("Sound " + soundIsOn);
 
     } else {
         soundIsOn = false;        
         toggleLed(soundIsOn, divSndLed, "sound-light");
-        console.log("Sound " + soundIsOn);
-    } 
+        //console.log("Sound " + soundIsOn);
+    }    
 }
 
-// If sound mode is ON, plays the beep sound.
+// If sound mode is ON, plays the beep.
 function playBeep() {
     if (soundIsOn) {
         audioBeep.currentTime = 0;
@@ -101,21 +118,19 @@ function playBeep() {
     }
 }
 
-// Turns calculator OFF, turns the power led OFF, turns the screen OFF, 
-// and turns sound mode OFF.
+// Turns calculator OFF
 function turnOffCalculator() {    
-    calculatorIsOn = false;
-    console.log("Calculator " + calculatorIsOn);       
+    calculatorIsOn = false;    
     toggleLed(calculatorIsOn, divPwrLed, "power-light");                  
     toggleScreen(); 
-    toggleSound();            
+    toggleSound();           
 }
 
 // Writes to calculator screen the pressed digit button.
-function writeToScreen(keyPressed) {    
-    // If user selected an operation, the screen will reset.
-    if (resetScreen) {
-        divScreen.textContent = "";
+function writeToScreen(keyPressed) { 
+    // If user inputs a new number (after clicking operation or equal buttons), Clears the screen.
+    if (newNumber) {
+       divScreen.textContent = "";
     }
     
     if (keyPressed !== ".") {
@@ -123,7 +138,7 @@ function writeToScreen(keyPressed) {
             divScreen.textContent = keyPressed;
         } else {
             divScreen.textContent += keyPressed;
-        }
+        }        
 
     // Once the decimal point is used, it is disabled.
     } else if (keyPressed == "." && decimalPointOn) {        
@@ -132,44 +147,94 @@ function writeToScreen(keyPressed) {
         }
         divScreen.textContent += keyPressed;
         decimalPointOn = false;
-        console.log("Decimal " + false);
+        //console.log("Decimal " + false);
     }    
-    
-    resetScreen = false;
-    console.log("Reset screen " + resetScreen);
 
-    if (soundIsOn) {
-        playBeep();
-    }
+    newNumber = false;
+    //console.log("Entering new: " + newNumber);
+    playBeep();
 }
 
-// Captures the number on the screen when an operation button is pressed.
-function saveScreenNumber() {
-    savedNumber = Number(divScreen.textContent);    
-    decimalPointOn = true;
-    resetScreen = true;
-    console.log("Saved " + savedNumber);    
-    console.log("Decimal " + decimalPointOn);
-    console.log("Reset screen " + resetScreen);
+// OPERATION BUTTON
+// Sets the operation to be done and saves the number written before the use of the operation button.
+function setOperation(operationSelected) {
+    // If there is an operation ongoing, does it first (Chaining operations, ie: 12+7-5*3)
+    if (operation != null) {
+        saveNumber();
+        getResult();
+    }
+    
+    // if (divScreen.textContent !== "0") {
+    //     operation = operationSelected;
+    //     //console.log("Operation: " + operation);
+    //     saveNumber();                
+    // }
+    operation = operationSelected;        
+    saveNumber();  
+    playBeep();
+}
+
+// Saves the number that is on the screen when an operation button is pressed, 
+function saveNumber() {    
+    if (savingFirstNumber) {
+        firstNumber = Number(divScreen.textContent);
+        savingFirstNumber = false;
+        //console.log("1st number: " + firstNumber + " Type: " + typeof firstNumber);
+
+    } else {
+        secondNumber = Number(divScreen.textContent);
+        //console.log("2nd number: " + secondNumber + " Type: " + typeof secondNumber);
+    }    
+    newNumber = true;
+    decimalPointOn = true;    
+    //console.log("Decimal: " + decimalPointOn);
+    //console.log("Entering new: " + newNumber);
+}
+
+// Writes the operation result on the screen
+function getResult() {    
+    let result = 0;
+    switch (operation) {
+        case "–":
+            result = firstNumber - secondNumber;
+            break;
+
+        case "÷":
+            result = firstNumber / secondNumber;
+            break;
+
+        case "+":
+            result = firstNumber + secondNumber;
+            break;
+
+        case "×":
+            result = firstNumber * secondNumber;
+    }
+    divScreen.textContent = result;
+    firstNumber = result;
+    savingFirstNumber = true;
+    newNumber = true;
+    operation = null;        
+    playBeep();
 }
 
 
 // ********************* CALCULATOR UI BUTTONS ************************
-// ON button: Turns ON calculator if it is OFF.
+// ON button
 btnOn.addEventListener("click", function() {
     if (!calculatorIsOn) {
         turnOnCalculator();
-    }
+    }    
 });
 
-// OFF button: Turns OFF calculator if it is ON
+// OFF button
 btnOff.addEventListener("click", function() {
     if (calculatorIsOn) {
         turnOffCalculator();
     }
 });
 
-// Sound button: Toggles sound if calculator is ON
+// Sound mode button
 btnSnd.addEventListener("click", function() {
     if (calculatorIsOn) {
         toggleSound();
