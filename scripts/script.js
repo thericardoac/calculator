@@ -29,7 +29,7 @@ const digitBtns = calculator.querySelectorAll(".btn-digit");
 digitBtns.forEach(digitBtn => {    
     const keyPressed = digitBtn.textContent
     digitBtn.addEventListener("click", function() {
-        if (calculatorIsOn) {            
+        if (calculatorIsOn && countDigits() < 9) {            
             writeToScreen(keyPressed);
         }
     });
@@ -67,7 +67,7 @@ function turnOnCalculator() {
     firstNumber = null;
     secondNumber = null;
     newNumber = true;
-    operation = null    
+    operation = null;    
     toggleLed(calculatorIsOn, divPwrLed, "power-light");        
     toggleScreen();
     toggleSound();
@@ -153,6 +153,12 @@ function writeToScreen(keyPressed) {
     newNumber = false;
     //console.log("Entering new: " + newNumber);
     playBeep();
+}
+
+function countDigits() {
+    let digitsOnScreen;
+    digitsOnScreen = divScreen.textContent.length;
+    return digitsOnScreen;
 }
 
 // OPERATION BUTTON
