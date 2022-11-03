@@ -51,7 +51,7 @@ operationBtns.forEach(operationBtn => {
 // Gets the result of the numbers operation.
 const equalsBtn = calculator.querySelector("#btn-equals");
 equalsBtn.addEventListener("click", function() {
-    if (calculatorIsOn) {        
+    if (calculatorIsOn && operation != null) {        
         saveNumber();
         getResult();
     }
@@ -183,7 +183,10 @@ function setOperation(operationSelected) {
 // Saves the number that is on the screen when an operation button is pressed, 
 function saveNumber() {    
     if (savingFirstNumber) {
-        firstNumber = Number(divScreen.textContent);
+        firstNumber = Number(divScreen.textContent);        
+        if (isNaN(firstNumber)) {
+            firstNumber = 0;
+        }        
         savingFirstNumber = false;
         //console.log("1st number: " + firstNumber + " Type: " + typeof firstNumber);
 
@@ -206,7 +209,12 @@ function getResult() {
             break;
 
         case "÷":
-            result = firstNumber / secondNumber;
+            if (secondNumber != 0) {
+                result = firstNumber / secondNumber;
+
+            } else {
+                result = "Error: 0";
+            }            
             break;
 
         case "+":
