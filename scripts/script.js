@@ -10,7 +10,7 @@ let operation = null;
 let savingFirstNumber = false;
 let firstNumber = null;
 let secondNumber = null;
-let newNumber = false;
+let newNumber = false; // User is writing a new number? i.e. After using an operation.
 
 // TOP BUTTONS
 const calculator = document.querySelector("#calculator-body");
@@ -29,7 +29,7 @@ const digitBtns = calculator.querySelectorAll(".btn-digit");
 digitBtns.forEach(digitBtn => {    
     const keyPressed = digitBtn.textContent
     digitBtn.addEventListener("click", function() {
-        if (calculatorIsOn && countDigits() < 9) {            
+        if (calculatorIsOn) {            
             writeToScreen(keyPressed);
         }
     });
@@ -131,31 +131,33 @@ function writeToScreen(keyPressed) {
     // If user inputs a new number (after clicking operation or equal buttons), Clears the screen.
     if (newNumber) {
        divScreen.textContent = "";
-    }
-    
-    if (keyPressed !== ".") {
-        if (divScreen.textContent == "0") {
-            divScreen.textContent = keyPressed;
-        } else {
-            divScreen.textContent += keyPressed;
-        }        
-
-    // Once the decimal point is used, it is disabled.
-    } else if (keyPressed == "." && decimalPointOn) {        
-        if (divScreen.textContent == "") {
-            divScreen.textContent = "0";
-        }
-        divScreen.textContent += keyPressed;
-        decimalPointOn = false;
-        //console.log("Decimal " + false);
     }    
-
-    newNumber = false;
-    //console.log("Entering new: " + newNumber);
-    playBeep();
+    
+    if (countDigitsOnScreen() < 9) {
+        if (keyPressed !== ".") {
+            if (divScreen.textContent == "0") {
+                divScreen.textContent = keyPressed;
+            } else {
+                divScreen.textContent += keyPressed;
+            }        
+    
+        // Once the decimal point is used, it is disabled.
+        } else if (keyPressed == "." && decimalPointOn) {        
+            if (divScreen.textContent == "") {
+                divScreen.textContent = "0";
+            }
+            divScreen.textContent += keyPressed;
+            decimalPointOn = false;
+            //console.log("Decimal " + false);
+        }    
+    
+        newNumber = false;
+        //console.log("Entering new: " + newNumber);
+        playBeep();
+    }    
 }
 
-function countDigits() {
+function countDigitsOnScreen() {
     let digitsOnScreen;
     digitsOnScreen = divScreen.textContent.length;
     return digitsOnScreen;
@@ -181,17 +183,20 @@ function setOperation(operationSelected) {
 }
 
 // Saves the number that is on the screen when an operation button is pressed, 
-function saveNumber() {    
-    if (savingFirstNumber) {
-        firstNumber = Number(divScreen.textContent);        
-        if (isNaN(firstNumber)) {
-            firstNumber = 0;
-        }        
+function saveNumber() {
+    // If screen has a NaN, i.e the "Error: 0" message, replaces it with a 0.
+    let screenNumber = Number(divScreen.textContent);
+    if (isNaN(screenNumber)) {
+        screenNumber = 0;
+    }
+
+    if (savingFirstNumber) {        
+        firstNumber = screenNumber;       
         savingFirstNumber = false;
         //console.log("1st number: " + firstNumber + " Type: " + typeof firstNumber);
 
-    } else {
-        secondNumber = Number(divScreen.textContent);
+    } else {        
+        secondNumber = screenNumber;
         //console.log("2nd number: " + secondNumber + " Type: " + typeof secondNumber);
     }    
     newNumber = true;
@@ -202,7 +207,7 @@ function saveNumber() {
 
 // Writes the operation result on the screen
 function getResult() {    
-    let result = 0;
+    let result = 0;    
     switch (operation) {
         case "–":
             result = firstNumber - secondNumber;
@@ -212,8 +217,8 @@ function getResult() {
             if (secondNumber != 0) {
                 result = firstNumber / secondNumber;
 
-            } else {
-                result = "Error: 0";
+            } else {                
+                result = "Error: 0";                
             }            
             break;
 
@@ -223,12 +228,12 @@ function getResult() {
 
         case "×":
             result = firstNumber * secondNumber;
-    }
-    divScreen.textContent = result;
+    }    
+    divScreen.textContent = result;    
     firstNumber = result;
     savingFirstNumber = true;
     newNumber = true;
-    operation = null;        
+    operation = null;          
     playBeep();
 }
 
