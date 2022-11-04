@@ -228,7 +228,13 @@ function getResult() {
 
         case "×":
             result = firstNumber * secondNumber;
-    }    
+    }
+
+    // If result is longer than 9 digits, removes the surplus numbers.
+    if (result.toString().length > 9) {        
+        result = Number(result.toString().slice(0, 9));
+    }
+
     divScreen.textContent = result;    
     firstNumber = result;
     savingFirstNumber = true;
@@ -236,7 +242,6 @@ function getResult() {
     operation = null;          
     playBeep();
 }
-
 
 // ********************* CALCULATOR UI BUTTONS ************************
 // ON button
