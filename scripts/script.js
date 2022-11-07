@@ -41,7 +41,8 @@ const operationBtns = calculator.querySelectorAll(".btn-operation");
 operationBtns.forEach(operationBtn => {    
     operationBtn.addEventListener("click", function() {
         if (calculatorIsOn) {
-            setOperation(operationBtn.textContent);                
+            setOperation(operationBtn.textContent);
+            screenBlink();
         }
     });
 });
@@ -54,6 +55,7 @@ equalsBtn.addEventListener("click", function() {
     if (calculatorIsOn && operation != null) {        
         saveNumber();
         getResult();
+        screenBlink();
     }
 });
 
@@ -116,6 +118,14 @@ function playBeep() {
         audioBeep.currentTime = 0;
         audioBeep.play();
     }
+}
+
+// Adds the blink class to the screen, waits for the animation to complete, then removes the class
+function screenBlink() {
+    divScreen.classList.add("screen-blink");
+    setTimeout(function(){
+        divScreen.classList.remove("screen-blink");
+    }, 100);
 }
 
 // Turns calculator OFF
