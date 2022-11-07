@@ -93,7 +93,7 @@ body {
 
 .screen-blink {
     animation-name: blink;
-    animation-duration: 200ms;
+    animation-duration: 100ms;
 }
 
 @keyframes blink {
