@@ -41,7 +41,7 @@ const operationBtns = calculator.querySelectorAll(".btn-operation");
 operationBtns.forEach(operationBtn => {    
     operationBtn.addEventListener("click", function() {
         if (calculatorIsOn) {
-            setOperation(operationBtn.textContent);                       
+            setOperation(operationBtn.textContent);                
         }
     });
 });
@@ -231,8 +231,9 @@ function getResult() {
     }
 
     // If result is longer than 9 digits, removes the surplus numbers.
-    if (result.toString().length > 9) {        
-        result = Number(result.toString().slice(0, 9));
+    let resultString = result.toString();
+    if (resultString.length > 9) {        
+       result = Number(resultString.slice(0, 9));
     }
 
     divScreen.textContent = result;    
