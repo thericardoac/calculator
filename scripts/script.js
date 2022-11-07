@@ -12,7 +12,7 @@ let firstNumber = null;
 let secondNumber = null;
 let newNumber = false; // User is writing a new number? i.e. After using an operation.
 
-// TOP BUTTONS
+// CALCULATOR BODY, SCREEN AND TOP BUTTONS
 const calculator = document.querySelector("#calculator-body");
 const divScreen = calculator.querySelector("#screen");
 const btnOn = calculator.querySelector("#btn-on");
@@ -21,6 +21,29 @@ const btnSnd = calculator.querySelector("#btn-sound");
 const divPwrLed = calculator.querySelector("#power-led");
 const divSndLed = calculator.querySelector("#sound-led");
 const audioBeep = calculator.querySelector("#audio-beep");
+
+
+// **************************** CALCULATOR UI BUTTONS ********************************
+// ON button
+btnOn.addEventListener("click", function() {
+    if (!calculatorIsOn) {
+        turnOnCalculator();
+    }    
+});
+
+// OFF button
+btnOff.addEventListener("click", function() {
+    if (calculatorIsOn) {
+        turnOffCalculator();
+    }
+});
+
+// Sound mode button
+btnSnd.addEventListener("click", function() {
+    if (calculatorIsOn) {
+        toggleSound();
+    }
+});
 
 // DIGIT BUTTONS
 // Creates an object with the digit buttons. (0-9 and decimal point).
@@ -253,25 +276,3 @@ function getResult() {
     operation = null;          
     playBeep();
 }
-
-// ********************* CALCULATOR UI BUTTONS ************************
-// ON button
-btnOn.addEventListener("click", function() {
-    if (!calculatorIsOn) {
-        turnOnCalculator();
-    }    
-});
-
-// OFF button
-btnOff.addEventListener("click", function() {
-    if (calculatorIsOn) {
-        turnOffCalculator();
-    }
-});
-
-// Sound mode button
-btnSnd.addEventListener("click", function() {
-    if (calculatorIsOn) {
-        toggleSound();
-    }
-});
