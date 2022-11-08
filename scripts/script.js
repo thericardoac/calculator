@@ -192,7 +192,7 @@ function screenBlink() {
     divScreen.classList.add("screen-blink");
     setTimeout(function(){
         divScreen.classList.remove("screen-blink");
-    }, 100);
+    }, 301);
 }
 
 // Turns calculator OFF
