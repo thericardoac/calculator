@@ -81,8 +81,7 @@ operationBtns.forEach(operationBtn => {
                     operationClicked = "*";
             }
 
-            setOperation(operationClicked);
-            screenBlink();
+            setOperation(operationClicked);            
         }
     });
 });
@@ -94,7 +93,6 @@ equalsBtn.addEventListener("click", function() {
     if (calculatorIsOn && operation != null) {        
         saveNumber();
         getResult();
-        screenBlink();
     }
 });
 
@@ -135,14 +133,12 @@ document.addEventListener("keydown", (event) => {
 
         if (keyPressed == "+" || keyPressed == "-" || 
         keyPressed == "*" || keyPressed == "/") {
-            setOperation(keyPressed);
-            screenBlink();
+            setOperation(keyPressed);            
         }
         
         if ((keyPressed == "=" || keyPressed == "Enter") && operation != null) {
             saveNumber();
-            getResult();
-            screenBlink();
+            getResult();            
         }
 
         if (keyPressed == "m" || keyPressed == "M") {
@@ -264,7 +260,8 @@ function setOperation(operationSelected) {
     }    
 
     operation = operationSelected;        
-    saveNumber();  
+    saveNumber();
+    screenBlink(); 
     playBeep();
 }
 
@@ -322,7 +319,8 @@ function getResult() {
     firstNumber = result;
     savingFirstNumber = true;
     newNumber = true;
-    operation = null;          
+    operation = null;
+    screenBlink();        
     playBeep();
 }
 
