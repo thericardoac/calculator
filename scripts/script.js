@@ -141,7 +141,7 @@ document.addEventListener("keydown", (event) => {
             getResult();            
         }
 
-        if (keyPressed == "m" || keyPressed == "M") {
+        if (keyPressed == "s" || keyPressed == "S") {
             toggleSound();
         }
     }    
