@@ -22,6 +22,7 @@ const divPwrLed = calculator.querySelector("#power-led");
 const divSndLed = calculator.querySelector("#sound-led");
 const audioBeep = calculator.querySelector("#audio-beep");
 const btnClear = calculator.querySelector("#btn-clear");
+const btnClearAll = calculator.querySelector("#btn-clear-all");
 
 
 // **************************** CALCULATOR UI BUTTONS ********************************
@@ -101,6 +102,13 @@ equalsBtn.addEventListener("click", function() {
 btnClear.addEventListener("click", function() {
     if (calculatorIsOn) {
         clearDigit();
+    }
+});
+
+// CLEAR AL BUTTON (CE)
+btnClearAll.addEventListener("click", function() {
+    if (calculatorIsOn) {
+        clearAll();
     }
 });
 
@@ -341,4 +349,17 @@ function clearDigit() {
         screenBlink();
         playBeep();
     }    
+}
+
+// Clears the screen, saved numbers, and current operation
+function clearAll() {
+    decimalPointOn = true;
+    savingFirstNumber = true;
+    firstNumber = null;
+    secondNumber = null;
+    newNumber = true;
+    operation = null;
+    divScreen.textContent = "0";
+    screenBlink();
+    playBeep();
 }
