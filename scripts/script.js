@@ -134,7 +134,15 @@ document.addEventListener("keydown", (event) => {
         if (keyPressed == "+" || keyPressed == "-" || 
         keyPressed == "*" || keyPressed == "/") {
             setOperation(keyPressed);            
-        }        
+        }
+        
+        if (keyPressed == "Backspace") {
+            clearDigit();
+        }
+        
+        if (keyPressed == "Escape" || keyPressed == "Delete") {
+            clearAll();
+        }
         
         if ((keyPressed == "=" || keyPressed == "Enter") && operation != null) {
             // Default is prevented because, if user types "Enter" while a button has focus,
