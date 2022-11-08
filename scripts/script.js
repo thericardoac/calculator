@@ -21,6 +21,7 @@ const btnSnd = calculator.querySelector("#btn-sound");
 const divPwrLed = calculator.querySelector("#power-led");
 const divSndLed = calculator.querySelector("#sound-led");
 const audioBeep = calculator.querySelector("#audio-beep");
+const btnClear = calculator.querySelector("#btn-clear");
 
 
 // **************************** CALCULATOR UI BUTTONS ********************************
@@ -93,6 +94,13 @@ equalsBtn.addEventListener("click", function() {
         saveNumber();
         getResult();
         screenBlink();
+    }
+});
+
+// CLEAR BUTTON (BACKSPACE)
+btnClear.addEventListener("click", function() {
+    if (calculatorIsOn) {
+        clearDigit();
     }
 });
 
@@ -308,4 +316,29 @@ function getResult() {
     newNumber = true;
     operation = null;          
     playBeep();
+}
+
+// Deletes a single digit at the time.
+function clearDigit() {    
+    let screenContent = divScreen.textContent;    
+
+    if (screenContent != 0) {
+        if (screenContent == "Error: 0" || screenContent.length == 1) {
+            screenContent = "0";
+
+        } else if (screenContent != "Error: 0") {
+            let deletedDigit;
+            deletedDigit = screenContent.at(-1);
+
+            if (deletedDigit == ".") {
+                decimalPointOn = true;
+            }
+
+            screenContent = screenContent.slice(0, -1);    
+        }
+
+        divScreen.textContent = screenContent;
+        screenBlink();
+        playBeep();
+    }    
 }
