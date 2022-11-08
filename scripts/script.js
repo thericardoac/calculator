@@ -47,7 +47,6 @@ btnSnd.addEventListener("click", function() {
 
 // DIGIT BUTTONS
 // Creates an object with the digit buttons. (0-9 and decimal point).
-// Each button writes to calculator screen its value.
 const digitBtns = calculator.querySelectorAll(".btn-digit");
 digitBtns.forEach(digitBtn => {    
     const keyPressed = digitBtn.textContent
@@ -60,11 +59,27 @@ digitBtns.forEach(digitBtn => {
 
 // OPERATION BUTTONS
 // Creates an object with the operation buttons.
+// In some cases, changes the button icon for the correct arithmetic operator. 
 const operationBtns = calculator.querySelectorAll(".btn-operation");
 operationBtns.forEach(operationBtn => {    
     operationBtn.addEventListener("click", function() {
         if (calculatorIsOn) {
-            setOperation(operationBtn.textContent);
+            let operationClicked = operationBtn.textContent;
+            
+            switch (operationClicked){                
+                case "–":
+                    operationClicked = "-";
+                    break;
+                    
+                case "÷":
+                    operationClicked = "/";
+                    break;
+
+                case "×":
+                    operationClicked = "*";
+            }
+
+            setOperation(operationClicked);
             screenBlink();
         }
     });
@@ -72,7 +87,6 @@ operationBtns.forEach(operationBtn => {
 
 // EQUALS BUTTON
 // If the user starts typing an operation instead of a digit, saves a 0 as the first number.
-// Gets the result of the numbers operation.
 const equalsBtn = calculator.querySelector("#btn-equals");
 equalsBtn.addEventListener("click", function() {
     if (calculatorIsOn && operation != null) {        
@@ -81,6 +95,45 @@ equalsBtn.addEventListener("click", function() {
         screenBlink();
     }
 });
+
+
+// ************************* KEYBOARD SUPPORT BUTTONS ***********************
+document.addEventListener("keydown", (event) => {
+    const keyPressed = event.key;
+
+    // Letter "O" regardless of case, turns ON or OFF the calculator.
+    if (keyPressed == "o" || keyPressed == "O") {
+        if (!calculatorIsOn) {
+            turnOnCalculator();
+        } else {
+            turnOffCalculator();
+        }
+    }
+
+    if (calculatorIsOn) {
+        // Converts the pressed key to a number. If it is "0-9" or decimal point, writes it to screen.
+        const keyToNumber = Number(keyPressed);
+        if (keyToNumber >= 0 || keyPressed == ".") {
+            writeToScreen(keyPressed);
+        }
+
+        if (keyPressed == "+" || keyPressed == "-" || 
+        keyPressed == "*" || keyPressed == "/") {
+            setOperation(keyPressed);
+            screenBlink();
+        }
+        
+        if ((keyPressed == "=" || keyPressed == "Enter") && operation != null) {
+            saveNumber();
+            getResult();
+            screenBlink();
+        }
+
+        if (keyPressed == "m" || keyPressed == "M") {
+            toggleSound();
+        }
+    }    
+}, false);
 
 
 // ********************* FUNCTION DECLARATIONS ************************
@@ -97,13 +150,6 @@ function turnOnCalculator() {
     toggleScreen();
     toggleSound();
     playBeep();
-    
-    // console.log("Calculator: " + calculatorIsOn);
-    // console.log("Entering new: " + newNumber);
-    // console.log("Decimal: " + decimalPointOn);
-    // console.log("Operation: " + operation);
-    // console.log("1st number: " + firstNumber);
-    // console.log("2nd number: " + secondNumber);
 }
 
 // Turns the screen ON (puts initial 0) or turns it OFF.
@@ -126,12 +172,10 @@ function toggleSound() {
         soundIsOn ? soundIsOn = false : soundIsOn = true;
         toggleLed(soundIsOn, divSndLed, "sound-light");
         playBeep();
-        //console.log("Sound " + soundIsOn);
 
     } else {
         soundIsOn = false;        
-        toggleLed(soundIsOn, divSndLed, "sound-light");
-        //console.log("Sound " + soundIsOn);
+        toggleLed(soundIsOn, divSndLed, "sound-light");        
     }    
 }
 
@@ -180,12 +224,10 @@ function writeToScreen(keyPressed) {
                 divScreen.textContent = "0";
             }
             divScreen.textContent += keyPressed;
-            decimalPointOn = false;
-            //console.log("Decimal " + false);
+            decimalPointOn = false;            
         }    
     
-        newNumber = false;
-        //console.log("Entering new: " + newNumber);
+        newNumber = false;        
         playBeep();
     }    
 }
@@ -203,13 +245,8 @@ function setOperation(operationSelected) {
     if (operation != null) {
         saveNumber();
         getResult();
-    }
-    
-    // if (divScreen.textContent !== "0") {
-    //     operation = operationSelected;
-    //     //console.log("Operation: " + operation);
-    //     saveNumber();                
-    // }
+    }    
+
     operation = operationSelected;        
     saveNumber();  
     playBeep();
@@ -225,28 +262,24 @@ function saveNumber() {
 
     if (savingFirstNumber) {        
         firstNumber = screenNumber;       
-        savingFirstNumber = false;
-        //console.log("1st number: " + firstNumber + " Type: " + typeof firstNumber);
+        savingFirstNumber = false;        
 
     } else {        
         secondNumber = screenNumber;
-        //console.log("2nd number: " + secondNumber + " Type: " + typeof secondNumber);
     }    
     newNumber = true;
     decimalPointOn = true;    
-    //console.log("Decimal: " + decimalPointOn);
-    //console.log("Entering new: " + newNumber);
 }
 
 // Writes the operation result on the screen
 function getResult() {    
     let result = 0;    
-    switch (operation) {
-        case "–":
+    switch (operation) {        
+        case "-":
             result = firstNumber - secondNumber;
             break;
-
-        case "÷":
+        
+        case "/":
             if (secondNumber != 0) {
                 result = firstNumber / secondNumber;
 
@@ -258,8 +291,8 @@ function getResult() {
         case "+":
             result = firstNumber + secondNumber;
             break;
-
-        case "×":
+        
+        case "*":
             result = firstNumber * secondNumber;
     }
 
