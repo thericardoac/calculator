@@ -112,7 +112,7 @@ btnClearAll.addEventListener("click", function() {
 
 
 // ************************* KEYBOARD SUPPORT BUTTONS ***********************
-document.addEventListener("keydown", (event) => {
+document.addEventListener("keydown", (event) => {    
     const keyPressed = event.key;
 
     // Letter "O" regardless of case, turns ON or OFF the calculator.
@@ -134,9 +134,12 @@ document.addEventListener("keydown", (event) => {
         if (keyPressed == "+" || keyPressed == "-" || 
         keyPressed == "*" || keyPressed == "/") {
             setOperation(keyPressed);            
-        }
+        }        
         
         if ((keyPressed == "=" || keyPressed == "Enter") && operation != null) {
+            // Default is prevented because, if user types "Enter" while a button has focus,
+            // It will do the focused button action instead of the "Equals" action.
+            event.preventDefault();
             saveNumber();
             getResult();            
         }
