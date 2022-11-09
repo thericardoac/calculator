@@ -12,7 +12,7 @@ let firstNumber = null;
 let secondNumber = null;
 let newNumber = false; // User is writing a new number? i.e. After using an operation.
 
-// CALCULATOR BODY, SCREEN AND TOP BUTTONS
+// CALCULATOR BODY, SCREEN, TOP, CLEAR AND HOTKEYS BUTTONS
 const calculator = document.querySelector("#calculator-body");
 const divScreen = calculator.querySelector("#screen");
 const btnOn = calculator.querySelector("#btn-on");
@@ -23,6 +23,7 @@ const divSndLed = calculator.querySelector("#sound-led");
 const audioBeep = calculator.querySelector("#audio-beep");
 const btnClear = calculator.querySelector("#btn-clear");
 const btnClearAll = calculator.querySelector("#btn-clear-all");
+const btnHotKeys = document.querySelector("#btn-hotkeys");
 
 
 // **************************** CALCULATOR UI BUTTONS ********************************
@@ -87,7 +88,7 @@ operationBtns.forEach(operationBtn => {
 });
 
 // EQUALS BUTTON
-// If the user starts typing an operation instead of a digit, saves a 0 as the first number.
+// If user starts typing an operation instead of a digit, saves a 0 as the first number.
 const equalsBtn = calculator.querySelector("#btn-equals");
 equalsBtn.addEventListener("click", function() {
     if (calculatorIsOn && operation != null) {        
@@ -110,12 +111,16 @@ btnClearAll.addEventListener("click", function() {
     }
 });
 
+//HOTKEYS BUTTON
+btnHotKeys.addEventListener("click", function() {
+    showHotKeys();
+});
+
 
 // ************************* KEYBOARD SUPPORT BUTTONS ***********************
 document.addEventListener("keydown", (event) => {    
-    const keyPressed = event.key;
-
-    // Letter "O" regardless of case, turns ON or OFF the calculator.
+    const keyPressed = event.key;      
+    
     if (keyPressed == "o" || keyPressed == "O") {
         if (!calculatorIsOn) {
             turnOnCalculator();
@@ -124,10 +129,15 @@ document.addEventListener("keydown", (event) => {
         }
     }
 
+    if (keyPressed == "?") {
+        showHotKeys();        
+    }
+
     if (calculatorIsOn) {
-        // Converts the pressed key to a number. If it is "0-9" or decimal point, writes it to screen.
-        const keyToNumber = Number(keyPressed);
-        if (keyToNumber >= 0 || keyPressed == ".") {
+        // Converts the pressed key to a number.
+        // If it is "0-9" or decimal point, writes it to screen except if it is a Space.
+        const keyToNumber = Number(keyPressed);        
+        if (keyPressed != " " && (keyToNumber >= 0 || keyPressed == ".")) {
             writeToScreen(keyPressed);
         }
 
@@ -360,7 +370,7 @@ function clearDigit() {
     }    
 }
 
-// Clears the screen, saved numbers, and current operation
+// Clears the screen, saved numbers, and current operation.
 function clearAll() {
     decimalPointOn = true;
     savingFirstNumber = true;
@@ -371,4 +381,18 @@ function clearAll() {
     divScreen.textContent = "0";
     screenBlink();
     playBeep();
+}
+
+// Shows the hotkeys to the user.
+function showHotKeys() {
+    const Hotkeys = 
+    `
+    Turn calculator ON/OFF:  O
+    Toggle sound mode:  S    
+    Digits:  0 - 9
+    Decimal point:  .
+    Operations:  +  -  *  /
+    Delete:  Backspace
+    Clear Everything:  Esc  or  Del`;
+    alert(Hotkeys);  
 }
