@@ -353,27 +353,25 @@ function getResult() {
 
 // Deletes a single digit at the time.
 function clearDigit() {    
-    let screenContent = divScreen.textContent;    
+    let screenContent = divScreen.textContent;
+    
+    if (screenContent == "Error: 0" || screenContent.length == 1) {
+        screenContent = "0";
 
-    if (screenContent != 0) {
-        if (screenContent == "Error: 0" || screenContent.length == 1) {
-            screenContent = "0";
+    } else if (screenContent != "Error: 0") {
+        let deletedDigit;
+        deletedDigit = screenContent.at(-1);
 
-        } else if (screenContent != "Error: 0") {
-            let deletedDigit;
-            deletedDigit = screenContent.at(-1);
-
-            if (deletedDigit == ".") {
-                decimalPointOn = true;
-            }
-
-            screenContent = screenContent.slice(0, -1);    
+        if (deletedDigit == ".") {
+            decimalPointOn = true;
         }
 
-        divScreen.textContent = screenContent;
-        screenBlink();
-        playBeep();
-    }    
+        screenContent = screenContent.slice(0, -1);    
+    }
+
+    divScreen.textContent = screenContent;
+    screenBlink();
+    playBeep();     
 }
 
 // Clears the screen, saved numbers, and current operation.
