@@ -104,7 +104,7 @@ btnClear.addEventListener("click", function() {
     }
 });
 
-// CLEAR AL BUTTON (CE)
+// CLEAR ALL BUTTON (CE)
 btnClearAll.addEventListener("click", function() {
     if (calculatorIsOn) {
         clearAll();
@@ -166,7 +166,7 @@ document.addEventListener("keydown", (event) => {
         
         if ((keyPressed == "=" || keyPressed == "Enter") && operation != null) {
             // Default is prevented because, if user types "Enter" while a button has focus,
-            // It will do the focused button action instead of the "Equals" action.
+            // it will do the focused button action instead of the "Equals" action.
             event.preventDefault();
             saveNumber();
             getResult();            
