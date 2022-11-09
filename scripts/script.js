@@ -119,40 +119,50 @@ btnHotKeys.addEventListener("click", function() {
 
 // ************************* KEYBOARD SUPPORT BUTTONS ***********************
 document.addEventListener("keydown", (event) => {    
-    const keyPressed = event.key;      
-    
-    if (keyPressed == "o" || keyPressed == "O") {
-        if (!calculatorIsOn) {
-            turnOnCalculator();
-        } else {
-            turnOffCalculator();
-        }
-    }
+    const keyPressed = event.key;
 
-    if (keyPressed == "?") {
-        showHotKeys();        
+    switch (keyPressed) {
+        case "o":
+        case "O":
+            if (!calculatorIsOn) {
+                turnOnCalculator();
+            } else {
+                turnOffCalculator();
+            }
+            break;
+        case "?":
+            showHotKeys();
     }
 
     if (calculatorIsOn) {
+        switch (keyPressed) {
+            case "+":
+            case "-":
+            case "*":
+            case "/":
+                setOperation(keyPressed);
+                break;
+
+            case "s":
+            case "S":
+                toggleSound();
+                break;
+
+            case "Backspace":
+                clearDigit();
+                break;
+            
+            case "Escape":
+            case "Delete":
+                clearAll();
+        }
+        
         // Converts the pressed key to a number.
         // If it is "0-9" or decimal point, writes it to screen except if it is a Space.
         const keyToNumber = Number(keyPressed);        
         if (keyPressed != " " && (keyToNumber >= 0 || keyPressed == ".")) {
             writeToScreen(keyPressed);
-        }
-
-        if (keyPressed == "+" || keyPressed == "-" || 
-        keyPressed == "*" || keyPressed == "/") {
-            setOperation(keyPressed);            
-        }
-        
-        if (keyPressed == "Backspace") {
-            clearDigit();
-        }
-        
-        if (keyPressed == "Escape" || keyPressed == "Delete") {
-            clearAll();
-        }
+        }        
         
         if ((keyPressed == "=" || keyPressed == "Enter") && operation != null) {
             // Default is prevented because, if user types "Enter" while a button has focus,
@@ -160,10 +170,6 @@ document.addEventListener("keydown", (event) => {
             event.preventDefault();
             saveNumber();
             getResult();            
-        }
-
-        if (keyPressed == "s" || keyPressed == "S") {
-            toggleSound();
         }
     }    
 }, false);
