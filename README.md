@@ -1,5 +1,6 @@
 JavaScript Calculator
 
-This is a simple calculator project.
-Includes basic math operations, a nice sound mode and an awesome led to know whether the mode is enabled
-or not!
+Includes basic operations, two super-awesome led lights, indicating whether the calculator and the sound mode are on.
+Coded with HTML, CSS and JavaScript.
+
+Live preview at: https://thericardoac.github.io/calculator/
