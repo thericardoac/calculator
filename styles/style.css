@@ -25,24 +25,11 @@
 }
 
 
-/* *********************** BODY ************************ */
-/* body {
-    height: 100vh;
-    display: flex;    
-    flex-direction: column;
-} */
-
-
 /* ******************** CALCULATOR ********************* */
 .container {
     background: url("../images/calculator-bg.jpg");
     background-size: cover;
-    background-position: center;
-    display: flex;    
-    flex: 1;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-evenly;
+    background-position: center;    
 }
 
 #calculator { 
