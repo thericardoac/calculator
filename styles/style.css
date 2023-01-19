@@ -8,13 +8,14 @@
 
 
 /* ******************** FONT IMPORT ******************** */
+/* Calculator screen font */
 @font-face {
     font-family: "Digital";
     src: url("../fonts/digital-7.ttf");
 }
 
 
-/* **************** FONT USED AS ICONS ***************** */
+/* Icons font */
 .material-symbols-outlined {        
     font-variation-settings:
     'FILL' 1,
@@ -25,11 +26,11 @@
 
 
 /* *********************** BODY ************************ */
-body {
+/* body {
     height: 100vh;
     display: flex;    
     flex-direction: column;
-}
+} */
 
 
 /* ******************** CALCULATOR ********************* */
