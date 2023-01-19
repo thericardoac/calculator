@@ -32,14 +32,6 @@
     background-position: center;    
 }
 
-#calculator { 
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    gap: 30px;
-}
-
 #calculator h1 {
     font-family: "Digital";
     font-weight: 500;
