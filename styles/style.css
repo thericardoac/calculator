@@ -26,6 +26,7 @@
 
 
 /* ******************** CALCULATOR ********************* */
+/* Calculator "box" and screen */
 .container {
     background: url("../images/calculator-bg.jpg");
     background-size: cover;
@@ -34,41 +35,43 @@
 
 #calculator h1 {
     font-family: "Digital";
+    font-size: 2rem;
     font-weight: 500;
-    font-size: 90px;
-    height: 70px;    
-    color: #f37c20;    
-    text-shadow: 0 0 15px black;    
+    text-align: center;
+    color: #f37c20;   
+    text-shadow: 0 0 0.9375rem black; 
 }
 
-#calculator-body {        
-    border-radius: 15px;
+#calculator-body {
+    width: 90%;
+    margin: 0 auto;
     display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0.7rem;
+    padding: 1rem;
     background-color: #d7d7d7;
-    padding: 20px;
-    box-shadow: 0 0 20px black;
-    grid-template-columns: repeat(5, 1fr);   
-    gap: 20px;
+    border-radius: 0.9375rem;
+    box-shadow: 0 0 1.25rem black;
 }
 
 #screen-frame {
     background-color: black;
-    padding: 10px;
-    border-radius: 10px;
-    grid-column: 1/6;    
+    padding: 0.5rem;
+    border-radius: 0.625rem;
+    grid-column: 1/6;   
 }
 
-#screen {    
-    background-color: #abc4a7;
+#screen {
     font-family: "Digital", sans-serif;
-    font-size: 80px;
+    font-size: 4rem;
     text-align: right;
-    letter-spacing: 4px;
-    border: 2px solid #b0b2b1;
-    border-radius: 10px;
-    padding: 10px;
-    height: 87px; 
-    box-shadow: inset 0 0 12px black;    
+    letter-spacing: 0.25rem;
+    background-color: #abc4a7;
+    border: 0.125rem solid #b0b2b1;
+    border-radius: 0.625rem;
+    height:4rem;
+    padding: 0 0.3215rem;
+    box-shadow: inset 0 0 0.75rem black;
 }
 
 .screen-blink {
@@ -76,6 +79,7 @@
     animation-duration: 300ms;
 }
 
+/* Blink animation for the screen when inputs are made */
 @keyframes blink {
     from {
         color: transparent;
