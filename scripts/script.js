@@ -249,7 +249,7 @@ function writeToScreen(keyPressed) {
        divScreen.textContent = "";
     }    
     
-    if (countDigitsOnScreen() < 9) {
+    if (countDigitsOnScreen() < 8) {
         if (keyPressed !== ".") {
             if (divScreen.textContent == "0") {
                 divScreen.textContent = keyPressed;
@@ -336,10 +336,10 @@ function getResult() {
             result = firstNumber * secondNumber;
     }
 
-    // If result is longer than 9 digits, removes the surplus numbers.
+    // If result is longer than 8 digits, removes the surplus numbers.
     let resultString = result.toString();
-    if (resultString.length > 9) {        
-       result = Number(resultString.slice(0, 9));
+    if (resultString.length > 8) {        
+       result = Number(resultString.slice(0, 8));
     }
 
     divScreen.textContent = result;    
