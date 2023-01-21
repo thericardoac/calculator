@@ -26,156 +26,8 @@ const btnClearAll = calculator.querySelector("#btn-clear-all");
 const btnHotKeys = document.querySelector("#btn-hotkeys");
 
 
-// **************************** CALCULATOR UI BUTTONS ********************************
-// ON button
-btnOn.addEventListener("click", function() {
-    if (!calculatorIsOn) {
-        turnOnCalculator();
-    }    
-});
 
-// OFF button
-btnOff.addEventListener("click", function() {
-    if (calculatorIsOn) {
-        turnOffCalculator();
-    }
-});
-
-// Sound mode button
-btnSnd.addEventListener("click", function() {
-    if (calculatorIsOn) {
-        toggleSound();
-    }
-});
-
-// DIGIT BUTTONS
-// Creates an object with the digit buttons. (0-9 and decimal point).
-const digitBtns = calculator.querySelectorAll(".btn-digit");
-digitBtns.forEach(digitBtn => {    
-    const keyPressed = digitBtn.textContent
-    digitBtn.addEventListener("click", function() {
-        if (calculatorIsOn) {            
-            writeToScreen(keyPressed);
-        }
-    });
-});
-
-// OPERATION BUTTONS
-// Creates an object with the operation buttons.
-// In some cases, changes the button icon for the correct arithmetic operator. 
-const operationBtns = calculator.querySelectorAll(".btn-operation");
-operationBtns.forEach(operationBtn => {    
-    operationBtn.addEventListener("click", function() {
-        if (calculatorIsOn) {
-            let operationClicked = operationBtn.textContent;
-            
-            switch (operationClicked){                
-                case "–":
-                    operationClicked = "-";
-                    break;
-                    
-                case "÷":
-                    operationClicked = "/";
-                    break;
-
-                case "×":
-                    operationClicked = "*";
-            }
-
-            setOperation(operationClicked);            
-        }
-    });
-});
-
-// EQUALS BUTTON
-// If user starts typing an operation instead of a digit, saves a 0 as the first number.
-const equalsBtn = calculator.querySelector("#btn-equals");
-equalsBtn.addEventListener("click", function() {
-    if (calculatorIsOn && operation != null) {        
-        saveNumber();
-        getResult();
-    }
-});
-
-// CLEAR BUTTON (BACKSPACE)
-btnClear.addEventListener("click", function() {
-    if (calculatorIsOn) {
-        clearDigit();
-    }
-});
-
-// CLEAR ALL BUTTON (CE)
-btnClearAll.addEventListener("click", function() {
-    if (calculatorIsOn) {
-        clearAll();
-    }
-});
-
-//HOTKEYS BUTTON
-btnHotKeys.addEventListener("click", function() {
-    showHotKeys();
-});
-
-
-// ************************* KEYBOARD SUPPORT BUTTONS ***********************
-document.addEventListener("keydown", (event) => {    
-    const keyPressed = event.key;
-
-    switch (keyPressed) {
-        case "o":
-        case "O":
-            if (!calculatorIsOn) {
-                turnOnCalculator();
-            } else {
-                turnOffCalculator();
-            }
-            break;
-        case "?":
-            showHotKeys();
-    }
-
-    if (calculatorIsOn) {
-        switch (keyPressed) {
-            case "+":
-            case "-":
-            case "*":
-            case "/":
-                setOperation(keyPressed);
-                break;
-
-            case "s":
-            case "S":
-                toggleSound();
-                break;
-
-            case "Backspace":
-                clearDigit();
-                break;
-            
-            case "Escape":
-            case "Delete":
-                clearAll();
-        }
-        
-        // Converts the pressed key to a number.
-        // If it is "0-9" or decimal point, writes it to screen except if it is a Space.
-        const keyToNumber = Number(keyPressed);        
-        if (keyPressed != " " && (keyToNumber >= 0 || keyPressed == ".")) {
-            writeToScreen(keyPressed);
-        }        
-        
-        if ((keyPressed == "=" || keyPressed == "Enter") && operation != null) {
-            // Default is prevented because, if user types "Enter" while a button has focus,
-            // it will do the focused button action instead of the "Equals" action.
-            event.preventDefault();
-            saveNumber();
-            getResult();            
-        }
-    }    
-}, false);
-
-
-// ********************* FUNCTION DECLARATIONS ************************
+// **************************** FUNCTION DECLARATIONS ******************************
 // Turns calculator ON
 function turnOnCalculator() {              
     calculatorIsOn = true;
@@ -400,3 +252,153 @@ function showHotKeys() {
     Clear Everything:  Esc  or  Del`;
     alert(Hotkeys);  
 }
+
+
+
+// ******************************** CALCULATOR UI BUTTONS **********************************
+// ON button
+btnOn.addEventListener("click", function() {
+    if (!calculatorIsOn) {
+        turnOnCalculator();
+    }    
+});
+
+// OFF button
+btnOff.addEventListener("click", function() {
+    if (calculatorIsOn) {
+        turnOffCalculator();
+    }
+});
+
+// Sound mode button
+btnSnd.addEventListener("click", function() {
+    if (calculatorIsOn) {
+        toggleSound();
+    }
+});
+
+// DIGIT BUTTONS
+// Creates an object with the digit buttons. (0-9 and decimal point).
+const digitBtns = calculator.querySelectorAll(".btn-digit");
+digitBtns.forEach(digitBtn => {    
+    const keyPressed = digitBtn.textContent
+    digitBtn.addEventListener("click", function() {
+        if (calculatorIsOn) {            
+            writeToScreen(keyPressed);
+        }
+    });
+});
+
+// OPERATION BUTTONS
+// Creates an object with the operation buttons.
+// In some cases, changes the button icon for the correct arithmetic operator. 
+const operationBtns = calculator.querySelectorAll(".btn-operation");
+operationBtns.forEach(operationBtn => {    
+    operationBtn.addEventListener("click", function() {
+        if (calculatorIsOn) {
+            let operationClicked = operationBtn.textContent;
+            
+            switch (operationClicked){                
+                case "–":
+                    operationClicked = "-";
+                    break;
+                    
+                case "÷":
+                    operationClicked = "/";
+                    break;
+
+                case "×":
+                    operationClicked = "*";
+            }
+
+            setOperation(operationClicked);            
+        }
+    });
+});
+
+// EQUALS BUTTON
+// If user starts typing an operation instead of a digit, saves a 0 as the first number.
+const equalsBtn = calculator.querySelector("#btn-equals");
+equalsBtn.addEventListener("click", function() {
+    if (calculatorIsOn && operation != null) {        
+        saveNumber();
+        getResult();
+    }
+});
+
+// CLEAR BUTTON (BACKSPACE)
+btnClear.addEventListener("click", function() {
+    if (calculatorIsOn) {
+        clearDigit();
+    }
+});
+
+// CLEAR ALL BUTTON (CE)
+btnClearAll.addEventListener("click", function() {
+    if (calculatorIsOn) {
+        clearAll();
+    }
+});
+
+//HOTKEYS BUTTON
+btnHotKeys.addEventListener("click", function() {
+    showHotKeys();
+});
+
+
+// ********************************* KEYBOARD SUPPORT BUTTONS *****************************
+document.addEventListener("keydown", (event) => {    
+    const keyPressed = event.key;
+
+    switch (keyPressed) {
+        case "o":
+        case "O":
+            if (!calculatorIsOn) {
+                turnOnCalculator();
+            } else {
+                turnOffCalculator();
+            }
+            break;
+        case "?":
+            showHotKeys();
+    }
+
+    if (calculatorIsOn) {
+        switch (keyPressed) {
+            case "+":
+            case "-":
+            case "*":
+            case "/":
+                setOperation(keyPressed);
+                break;
+
+            case "s":
+            case "S":
+                toggleSound();
+                break;
+
+            case "Backspace":
+                clearDigit();
+                break;
+            
+            case "Escape":
+            case "Delete":
+                clearAll();
+        }
+        
+        // Converts the pressed key to a number.
+        // If it is "0-9" or decimal point, writes it to screen except if it is a Space.
+        const keyToNumber = Number(keyPressed);        
+        if (keyPressed != " " && (keyToNumber >= 0 || keyPressed == ".")) {
+            writeToScreen(keyPressed);
+        }        
+        
+        if ((keyPressed == "=" || keyPressed == "Enter") && operation != null) {
+            // Default is prevented because, if user types "Enter" while a button has focus,
+            // it will do the focused button action instead of the "Equals" action.
+            event.preventDefault();
+            saveNumber();
+            getResult();            
+        }
+    }    
+}, false);
