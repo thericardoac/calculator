@@ -57,7 +57,7 @@ body {
                 0 0 2px black,
                 0 0 2px black,
                 0 0 2px black;
-    margin-bottom: 2rem;
+    margin: 2rem 0;
 }
 
 #calculator-body {
@@ -217,6 +217,7 @@ body {
 #btn-hotkeys {
     display: block;
     margin: 0 auto;
+    margin-bottom: 2rem;
     font-size: 0.75rem;    
     padding: 0.5rem;    
 }
@@ -226,7 +227,7 @@ body {
 footer {    
     text-align: center;
     background-color: #f37c20;    
-    padding: 2rem 0;
+    padding: 1rem 0;
     box-shadow: 0 0 1.25rem black;
 }
 
@@ -242,4 +243,37 @@ footer p {
 
 footer p:last-of-type {
     margin-bottom: 0;
+}
+
+/* *************** RESPONSIVE DESIGN ******************** */
+@media only screen and (min-width: 376px) {
+    html {
+        font-size: 18px;
+    }
+
+    #calculator-body {
+        max-width: 324px;
+    }
+}
+
+/* TABLET */
+@media only screen and (min-width: 426px) {
+    html {
+        font-size: 20px;
+    }
+
+    #calculator-body {
+        max-width: 354px;
+    }
+}
+
+/* LAPTOP and UP */
+@media only screen and (min-width: 769px) {
+    html {
+        font-size: 22px;
+    }
+
+    #calculator-body {
+        max-width: 390px;
+    }
 }
